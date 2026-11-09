@@ -56,9 +56,12 @@ def book_create(request):
 @login_required
 def book_update(request, pk):
     book = my_book(request, pk)
+    old_cover = book.cover.name
     form = BookForm(request.POST or None, request.FILES or None, instance=book)
     if request.method == "POST" and form.is_valid():
-        form.save()
+        book = form.save()
+        if old_cover and old_cover != book.cover.name:
+            book.cover.storage.delete(old_cover)  # 바꾸거나 지운 옛 표지 파일을 지운다
         messages.success(request, "책 정보를 고쳤습니다.")
         return redirect("book_detail", pk=book.pk)
     return render(request, "notes/book_form.html", {"form": form, "heading": "책 정보 고치기", "book": book})
@@ -69,6 +72,8 @@ def book_delete(request, pk):
     book = my_book(request, pk)
     if request.method == "POST":
         title = book.title
+        if book.cover:
+            book.cover.delete(save=False)  # 표지 사진 파일도 함께 지운다
         book.delete()
         messages.success(request, f"'{title}'을(를) 지웠습니다.")
         return redirect("home")

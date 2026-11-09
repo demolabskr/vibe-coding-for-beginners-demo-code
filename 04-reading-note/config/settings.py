@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,13 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-practice-only-key-not-for-real-use'
+# 비밀 값은 코드에 적지 않고 .env 파일에서 읽는다(.env는 Git에 올리지 않는다).
+load_dotenv(BASE_DIR / '.env')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+if not SECRET_KEY:
+    raise ImproperlyConfigured('.env에 DJANGO_SECRET_KEY가 없습니다. uv run python make_env.py로 .env를 만드세요.')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 디버그 모드: 오류를 자세히 보여 주는 개발용 설정. 내 컴퓨터에서만 켠다.
+DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = []
+# 내 컴퓨터에서만 연다.
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
