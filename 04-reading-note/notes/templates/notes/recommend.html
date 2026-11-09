@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}다음 책 추천 - 나의 독서 노트{% endblock %}
+{% block content %}
+<h1>다음 책 추천</h1>
+<p>별점 4점 이상을 준 책의 제목, 저자, 메모 요약만 AI에게 보냅니다.</p>
+<ul>
+  {% for b in favorites %}<li>{{ b.title }} / {{ b.author }} {{ b.stars }}</li>
+  {% empty %}<li class="empty">아직 별점 4점 이상인 책이 없습니다.</li>{% endfor %}
+</ul>
+<form method="post" class="ai-form" data-waiting="추천할 책을 고르는 중입니다. 30초쯤 걸릴 수 있습니다.">
+  {% csrf_token %}<button type="submit">추천받기</button>
+</form>
+
+{% if items %}
+<article class="ai-result">
+  <header><mark>AI 추천 · 실제 책인지 확인하세요</mark></header>
+  <ul>
+    {% for item in items %}
+    <li>{{ item.text }} <a href="https://search.naver.com/search.naver?query={{ item.query|urlencode }}" target="_blank" rel="noopener">검색</a></li>
+    {% endfor %}
+  </ul>
+  <footer>AI는 없는 책을 지어낼 수 있습니다. 검색으로 제목과 저자가 실제로 있는지 확인하세요.</footer>
+</article>
+{% endif %}
+{% endblock %}

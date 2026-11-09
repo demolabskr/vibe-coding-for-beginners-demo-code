@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "소설",
+          "에세이",
+          "시",
+          "인문",
+          "역사",
+          "과학",
+          "사회",
+          "경제경영",
+          "자기계발",
+          "성장",
+          "관계",
+          "판타지"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 3
+    }
+  },
+  "required": [
+    "tags"
+  ],
+  "additionalProperties": false
+}

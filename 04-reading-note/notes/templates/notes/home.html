@@ -30,6 +30,7 @@
     <div class="book-main">
       <a href="{% url 'book_detail' book.pk %}"><strong>{{ book.title }}</strong></a>
       <span class="author">{{ book.author }}</span>
+      {% if book.tags %}<span class="tags">{% for t in book.tag_list %}#{{ t }} {% endfor %}</span>{% endif %}
     </div>
     <span class="rating">{{ book.stars }}</span>
     <span class="status">{{ book.get_status_display }}</span>

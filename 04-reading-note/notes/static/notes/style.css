@@ -76,3 +76,13 @@ button.link { background: none; border: 0; padding: 0; color: var(--accent); wid
   .book-detail { flex-direction: column; }
   .site-header nav { flex-direction: column; align-items: flex-start; }
 }
+
+/* AI 도우미 */
+.ai-box { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin: 24px 0; }
+.ai-notice { color: var(--muted); font-size: 0.85rem; }
+.ai-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.ai-buttons form { margin: 0; }
+.ai-result mark { background: #fff3d6; color: #8a5a00; font-size: 0.8rem; padding: 2px 8px; border-radius: 999px; }
+.ai-result mark.checked { background: #eef5f0; color: var(--accent); }
+.book-card .tags { color: var(--accent); font-size: 0.8rem; }
+.notice.error { background: #fdecea; color: #b3261e; }

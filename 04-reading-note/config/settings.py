@@ -126,6 +126,9 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
+# AI 기능: 한 사람이 하루에 부를 수 있는 횟수
+AI_DAILY_LIMIT = 20
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
