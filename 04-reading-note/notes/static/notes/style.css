@@ -45,3 +45,10 @@ a { color: var(--accent); }
   padding: 2px 10px;
   border-radius: 999px;
 }
+.empty { color: var(--muted); list-style: none; }
+.book-info { display: grid; grid-template-columns: 110px 1fr; gap: 6px 12px; }
+.book-info dt { color: var(--muted); }
+.book-info dd { margin: 0; }
+.note-list { list-style: none; padding: 0; display: grid; gap: 10px; }
+.note-list li { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.note-list small { display: block; color: var(--muted); margin-top: 6px; }

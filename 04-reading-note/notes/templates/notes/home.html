@@ -4,10 +4,12 @@
 <ul class="book-list">
   {% for book in books %}
   <li class="book-card">
-    <strong>{{ book.title }}</strong>
+    <a href="{% url 'book_detail' book.pk %}"><strong>{{ book.title }}</strong></a>
     <span class="author">{{ book.author }}</span>
-    <span class="status">{{ book.status }}</span>
+    <span class="status">{{ book.get_status_display }}</span>
   </li>
+  {% empty %}
+  <li class="empty">아직 등록한 책이 없습니다. 관리자 화면에서 책을 등록해 보세요.</li>
   {% endfor %}
 </ul>
 {% endblock %}
