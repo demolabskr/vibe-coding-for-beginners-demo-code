@@ -1,0 +1,22 @@
+# 파이썬 가상환경과 임시 파일
+.venv/
+__pycache__/
+*.pyc
+
+# 비밀 값: 예시 파일만 올린다
+.env
+!.env.example
+
+# 실행하며 생기는 데이터(데이터베이스, 올린 파일, 백업, 실습 결과)
+*.db
+*.sqlite3
+media/
+backups/
+todo.txt
+budget_summary.csv
+books.json
+rename_test/
+
+# 운영체제가 만드는 파일
+.DS_Store
+Thumbs.db
