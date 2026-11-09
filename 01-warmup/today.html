@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>오늘의 나</title>
+</head>
+<body>
+  <h1>안녕하세요, 김하늘입니다</h1>
+  <p>오늘은 <span id="today"></span>입니다.</p>
+  <script>
+    const now = new Date();
+    document.getElementById("today").textContent =
+      now.getFullYear() + "년 " + (now.getMonth() + 1) + "월 " + now.getDate() + "일";
+  </script>
+</body>
+</html>
