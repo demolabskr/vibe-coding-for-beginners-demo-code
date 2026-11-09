@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>업무 일지</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+  <style>
+    .narrow { max-width: 420px; margin: 24px auto; }
+    .error { color: #b3261e; }
+    mark { font-size: 0.8rem; }
+    .report { white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <nav class="container">
+    <ul><li><strong>업무 일지</strong></li></ul>
+    {% if user.is_authenticated %}
+    <ul>
+      <li><a href="{% url 'entry_list' %}">기록</a></li>
+      <li><a href="{% url 'weekly_report' %}">주간 보고</a></li>
+      <li><form method="post" action="{% url 'logout' %}" style="margin:0">{% csrf_token %}<button class="outline" style="padding:4px 10px">로그아웃</button></form></li>
+    </ul>
+    {% endif %}
+  </nav>
+  <main class="container">
+    {% for message in messages %}<p><mark>{{ message }}</mark></p>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ title }}</h1>
+{% if results %}
+  {% for r in results %}
+  <article>
+    <p><strong>{% if r.correct %}정답{% else %}오답{% endif %}</strong> · {{ r.quiz.question }}</p>
+    <p>정답: {% for c in r.quiz.choices %}{% if forloop.counter0 == r.quiz.answer %}{{ c }}{% endif %}{% endfor %}</p>
+    <p><small>{{ r.quiz.explanation }}</small></p>
+  </article>
+  {% endfor %}
+  <p><mark>AI가 만든 문제입니다. 정답과 해설이 노트와 다르면 노트를 기준으로 하세요.</mark></p>
+{% elif quizzes %}
+<form method="post">
+  {% csrf_token %}
+  {% for q in quizzes %}
+  <fieldset>
+    <legend>{{ forloop.counter }}. {{ q.question }}</legend>
+    {% for c in q.choices %}
+    <label><input type="radio" name="q{{ q.pk }}" value="{{ forloop.counter0 }}"> {{ c }}</label>
+    {% endfor %}
+  </fieldset>
+  {% endfor %}
+  <button type="submit">채점하기</button>
+</form>
+{% else %}
+<p>풀 문제가 없습니다.</p>
+{% endif %}
+{% endblock %}

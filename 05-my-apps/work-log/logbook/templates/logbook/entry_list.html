@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>오늘 한 일</h1>
+<form method="post">
+  {% csrf_token %}
+  <div class="grid">{{ form.day }}{{ form.body }}</div>
+  <button type="submit">기록하기</button>
+</form>
+<h2>지난주부터의 기록</h2>
+<table>
+  <thead><tr><th>날짜</th><th>한 일</th></tr></thead>
+  <tbody>
+    {% for e in entries %}<tr><td>{{ e.day|date:"m/d (D)" }}</td><td>{{ e.body }}</td></tr>
+    {% empty %}<tr><td colspan="2">아직 기록이 없습니다.</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="narrow">
+  <h1>로그인</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% if form.errors %}<p class="error">아이디나 비밀번호가 맞지 않습니다.</p>{% endif %}
+    <label>아이디 <input type="text" name="username" autofocus required></label>
+    <label>비밀번호 <input type="password" name="password" required></label>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit">로그인</button>
+  </form>
+  <p>계정은 createsuperuser로 만든다.</p>
+</article>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>공부 노트</h1>
+{% if wrong %}<p><a href="{% url 'review' %}" role="button" class="secondary">틀린 문제 {{ wrong }}개 다시 풀기</a></p>{% endif %}
+<ul>
+  {% for n in notes %}<li><a href="{% url 'note_detail' n.pk %}">[{{ n.subject }}] {{ n.title }}</a> · 문제 {{ n.quizzes.count }}개</li>
+  {% empty %}<li>아직 노트가 없습니다.</li>{% endfor %}
+</ul>
+<h2>새 노트</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">저장</button>
+</form>
+{% endblock %}

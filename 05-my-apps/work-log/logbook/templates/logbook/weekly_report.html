@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>주간 보고 {{ week_start|date:"m/d" }} - {{ week_end|date:"m/d" }}</h1>
+<p><a href="?week=this">이번 주</a> · <a href="?week=last">지난주</a></p>
+<details>
+  <summary>이 주의 기록 {{ entries|length }}개</summary>
+  <ul>{% for e in entries %}<li>{{ e.day|date:"m/d" }} {{ e.body }}</li>{% endfor %}</ul>
+</details>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" onclick="this.setAttribute('aria-busy','true'); this.textContent='초안을 쓰는 중입니다. 30초쯤 걸릴 수 있습니다.';">
+    {% if report %}다시 만들기{% else %}AI로 주간 보고 초안 만들기{% endif %}
+  </button>
+</form>
+{% if report %}
+<article>
+  <header><mark>AI가 만든 초안 · 회사에 내기 전에 기록과 맞춰 고치세요</mark></header>
+  <div class="report">{{ report.body }}</div>
+</article>
+{% endif %}
+<p><small>회사 업무 기록을 AI에 넣기 전에 회사의 AI 사용 규정을 먼저 확인하세요.</small></p>
+{% endblock %}
