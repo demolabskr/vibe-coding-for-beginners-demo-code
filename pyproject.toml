@@ -5,4 +5,6 @@ description = "비개발 초보자를 위한 바이브 코딩 입문 - Codex 활
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "python-dateutil>=4.0.0",
+]
