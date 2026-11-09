@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}책 지우기 - 나의 독서 노트{% endblock %}
+{% block content %}
+<h1>책 지우기</h1>
+<p>'{{ book.title }}'과(와) 이 책의 메모 {{ book.notes.count }}개를 지웁니다. 지운 뒤에는 되돌릴 수 없습니다.</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="danger">지우기</button>
+  <a href="{% url 'book_detail' book.pk %}">취소</a>
+</form>
+{% endblock %}

@@ -1,15 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>책 목록</h1>
+<div class="title-row">
+  <h1>책 목록</h1>
+  <a href="{% url 'book_create' %}" role="button">책 등록</a>
+</div>
+
+<form method="get" class="search">
+  <input type="search" name="q" value="{{ q }}" placeholder="제목이나 저자로 찾기">
+  <select name="sort" aria-label="정렬">
+    <option value="new" {% if sort == "new" %}selected{% endif %}>최신순</option>
+    <option value="rating" {% if sort == "rating" %}selected{% endif %}>별점순</option>
+    <option value="title" {% if sort == "title" %}selected{% endif %}>제목순</option>
+  </select>
+  {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+  <button type="submit">찾기</button>
+</form>
+
+<p class="status-filter">
+  <a href="{% querystring status=None page=None %}" {% if not status %}aria-current="true"{% endif %}>전체</a>
+  {% for value, label in statuses %}
+  <a href="{% querystring status=value page=None %}" {% if status == value %}aria-current="true"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</p>
+
 <ul class="book-list">
-  {% for book in books %}
+  {% for book in page %}
   <li class="book-card">
-    <a href="{% url 'book_detail' book.pk %}"><strong>{{ book.title }}</strong></a>
-    <span class="author">{{ book.author }}</span>
+    {% if book.cover %}<img src="{{ book.cover.url }}" alt="" class="thumb">{% endif %}
+    <div class="book-main">
+      <a href="{% url 'book_detail' book.pk %}"><strong>{{ book.title }}</strong></a>
+      <span class="author">{{ book.author }}</span>
+    </div>
+    <span class="rating">{{ book.stars }}</span>
     <span class="status">{{ book.get_status_display }}</span>
   </li>
   {% empty %}
-  <li class="empty">아직 등록한 책이 없습니다. 관리자 화면에서 책을 등록해 보세요.</li>
+  <li class="empty">{% if q or status %}찾는 책이 없습니다. 검색어나 상태를 바꿔 보세요.{% else %}아직 등록한 책이 없습니다. 첫 책을 등록해 보세요.{% endif %}</li>
   {% endfor %}
 </ul>
+
+{% if page.paginator.num_pages > 1 %}
+<nav class="pager">
+  {% if page.has_previous %}<a href="{% querystring page=page.previous_page_number %}">← 이전</a>{% endif %}
+  <span>{{ page.number }} / {{ page.paginator.num_pages }}쪽</span>
+  {% if page.has_next %}<a href="{% querystring page=page.next_page_number %}">다음 →</a>{% endif %}
+</nav>
+{% endif %}
 {% endblock %}

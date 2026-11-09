@@ -2,13 +2,22 @@
 {% block title %}{{ book.title }} - 나의 독서 노트{% endblock %}
 {% block content %}
 <p><a href="{% url 'home' %}">← 책 목록</a></p>
-<h1>{{ book.title }}</h1>
-<dl class="book-info">
-  <dt>저자</dt><dd>{{ book.author|default:"-" }}</dd>
-  <dt>읽는 상태</dt><dd>{{ book.get_status_display }}</dd>
-  <dt>별점</dt><dd>{% if book.rating %}{{ book.rating }}점{% else %}-{% endif %}</dd>
-  <dt>다 읽은 날</dt><dd>{{ book.finished_on|default:"-" }}</dd>
-</dl>
+<article class="book-detail">
+  {% if book.cover %}<img src="{{ book.cover.url }}" alt="{{ book.title }} 표지" class="cover">{% endif %}
+  <div>
+    <h1>{{ book.title }}</h1>
+    <dl class="book-info">
+      <dt>저자</dt><dd>{{ book.author|default:"-" }}</dd>
+      <dt>읽는 상태</dt><dd>{{ book.get_status_display }}</dd>
+      <dt>별점</dt><dd>{% if book.rating %}{{ book.rating }}점{% else %}-{% endif %}</dd>
+      <dt>다 읽은 날</dt><dd>{{ book.finished_on|default:"-" }}</dd>
+    </dl>
+    <p class="actions">
+      <a href="{% url 'book_update' book.pk %}" role="button" class="secondary">고치기</a>
+      <a href="{% url 'book_delete' book.pk %}" role="button" class="secondary outline">지우기</a>
+    </p>
+  </div>
+</article>
 
 <h2>독서 메모</h2>
 <ul class="note-list">
@@ -18,4 +27,10 @@
   <li class="empty">아직 메모가 없습니다.</li>
   {% endfor %}
 </ul>
+<form method="post" action="{% url 'note_add' book.pk %}">
+  {% csrf_token %}
+  {{ note_form.body.label_tag }}
+  {{ note_form.body }}
+  <button type="submit">메모 남기기</button>
+</form>
 {% endblock %}

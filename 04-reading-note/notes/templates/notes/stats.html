@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}통계 - 나의 독서 노트{% endblock %}
+{% block content %}
+<h1>{{ year }}년 독서 통계</h1>
+<div class="stat-cards">
+  <article><small>올해 다 읽은 책</small><strong>{{ done_count }}권</strong></article>
+  <article><small>평균 별점</small><strong>{% if average %}{{ average|floatformat:1 }}점{% else %}-{% endif %}</strong></article>
+  {% for label, count in by_status %}
+  <article><small>{{ label }}</small><strong>{{ count }}권</strong></article>
+  {% endfor %}
+</div>
+
+<h2>달별 다 읽은 책</h2>
+<table class="month-bars">
+  {% for m in months %}
+  <tr>
+    <th>{{ m.month }}월</th>
+    <td><span class="bar" style="width: {{ m.percent }}%"></span></td>
+    <td class="count">{{ m.count }}권</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

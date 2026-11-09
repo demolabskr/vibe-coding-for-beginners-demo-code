@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}로그인 - 나의 독서 노트{% endblock %}
+{% block content %}
+<article class="narrow">
+  <h1>로그인</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% if form.errors %}<p class="error">아이디나 비밀번호가 맞지 않습니다.</p>{% endif %}
+    <label>아이디 <input type="text" name="username" autofocus required></label>
+    <label>비밀번호 <input type="password" name="password" required></label>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit">로그인</button>
+  </form>
+  <p>처음이면 <a href="{% url 'signup' %}">가입</a>하세요.</p>
+</article>
+{% endblock %}

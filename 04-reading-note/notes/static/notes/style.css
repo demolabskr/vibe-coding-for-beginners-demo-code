@@ -1,54 +1,78 @@
-/* 차분한 책방 느낌: 따뜻한 종이색 바탕, 짙은 갈색 글자, 초록 강조색 */
-:root {
+/* 차분한 책방 느낌: Pico CSS 위에 종이색 바탕, 짙은 갈색 글자, 초록 강조색을 덮어쓴다.
+   Pico가 색을 정한 선택자와 같은 선택자를 써야 나중에 읽는 이 파일의 값이 이긴다. */
+:root:not([data-theme="dark"]) {
   --paper: #faf6ef;
   --ink: #3b2f2a;
   --muted: #8a7b70;
   --accent: #2f6f4e;
   --line: #e6dccd;
+  --pico-font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --pico-background-color: var(--paper);
+  --pico-color: var(--ink);
+  --pico-primary: var(--accent);
+  --pico-primary-background: var(--accent);
+  --pico-primary-border: var(--accent);
+  --pico-primary-hover-background: #255a3f;
+  --pico-secondary: #6b5b50;
+  --pico-secondary-background: #6b5b50;
+  --pico-secondary-border: #6b5b50;
+  --pico-secondary-hover-background: #574940;
+  --pico-secondary-hover-border: #574940;
+  --pico-font-size: 100%;
 }
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  line-height: 1.6;
-}
-a { color: var(--accent); }
-.site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--line);
-  background: #fff;
-}
-.site-header .logo { font-weight: bold; font-size: 1.2rem; color: var(--ink); text-decoration: none; }
-.site-header nav a { margin-left: 16px; text-decoration: none; }
-.container { max-width: 880px; margin: 0 auto; padding: 24px; }
-.site-footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 24px; }
-.book-list { list-style: none; padding: 0; display: grid; gap: 12px; }
-.book-card {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 14px 16px;
-}
-.book-card .author { color: var(--muted); }
-.book-card .status {
-  margin-left: auto;
-  font-size: 0.85rem;
-  background: #eef5f0;
-  color: var(--accent);
-  padding: 2px 10px;
-  border-radius: 999px;
-}
+h1, h2 { --pico-color: var(--ink); color: var(--ink); }
+.site-header { background: #fff; border-bottom: 1px solid var(--line); }
+.site-header .logo { font-weight: bold; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+form.inline { margin: 0; }
+button.link { background: none; border: 0; padding: 0; color: var(--accent); width: auto; margin: 0; }
+.site-footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 24px 0; }
+.notice { background: #eef5f0; color: var(--accent); padding: 10px 14px; border-radius: 8px; }
+.error { color: #b3261e; display: block; margin-top: -8px; margin-bottom: 12px; }
+.title-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.search { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+.search > * { margin-bottom: 0; }
+.status-filter a { margin-right: 12px; text-decoration: none; }
+.status-filter a[aria-current] { font-weight: bold; text-decoration: underline; }
 .empty { color: var(--muted); list-style: none; }
+.book-list { list-style: none; padding: 0; display: grid; gap: 10px; }
+.book-list li { list-style: none; }
+.book-card {
+  display: flex; gap: 12px; align-items: center;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px;
+}
+.book-card .thumb { width: 40px; height: 56px; object-fit: cover; border-radius: 4px; }
+.book-card .book-main { display: flex; flex-direction: column; }
+.book-card .author { color: var(--muted); font-size: 0.9rem; }
+.book-card .rating { margin-left: auto; color: #c98a1b; letter-spacing: 1px; }
+.book-card .status {
+  font-size: 0.8rem; background: #eef5f0; color: var(--accent);
+  padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+}
+.pager { display: flex; justify-content: center; gap: 16px; }
+.book-detail { display: flex; gap: 24px; align-items: flex-start; }
+.book-detail .cover { width: 140px; border-radius: 6px; }
 .book-info { display: grid; grid-template-columns: 110px 1fr; gap: 6px 12px; }
 .book-info dt { color: var(--muted); }
 .book-info dd { margin: 0; }
+.actions a { margin-right: 8px; }
 .note-list { list-style: none; padding: 0; display: grid; gap: 10px; }
-.note-list li { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.note-list li { list-style: none; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
 .note-list small { display: block; color: var(--muted); margin-top: 6px; }
+.danger { background: #b3261e; border-color: #b3261e; }
+.narrow { max-width: 420px; margin: 24px auto; }
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+.stat-cards article { margin: 0; padding: 14px; }
+.stat-cards small { color: var(--muted); display: block; }
+.stat-cards strong { font-size: 1.5rem; }
+.month-bars th { width: 60px; font-weight: normal; white-space: nowrap; }
+.month-bars .bar { display: block; height: 14px; background: var(--accent); border-radius: 4px; min-width: 2px; }
+.month-bars .count { width: 60px; text-align: right; }
+
+/* 휴대폰처럼 좁은 화면 */
+@media (max-width: 600px) {
+  .search { grid-template-columns: 1fr; }
+  .book-card { flex-wrap: wrap; }
+  .book-card .rating { margin-left: 0; }
+  .book-detail { flex-direction: column; }
+  .site-header nav { flex-direction: column; align-items: flex-start; }
+}

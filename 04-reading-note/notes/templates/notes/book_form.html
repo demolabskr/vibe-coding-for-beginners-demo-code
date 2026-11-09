@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ heading }} - 나의 독서 노트{% endblock %}
+{% block content %}
+<h1>{{ heading }}</h1>
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  {% for field in form %}
+  <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+  {{ field }}
+  {% for error in field.errors %}<small class="error">{{ error }}</small>{% endfor %}
+  {% endfor %}
+  {% for error in form.non_field_errors %}<p class="error">{{ error }}</p>{% endfor %}
+  <button type="submit">저장</button>
+  <a href="{% if book %}{% url 'book_detail' book.pk %}{% else %}{% url 'home' %}{% endif %}">취소</a>
+</form>
+{% endblock %}
