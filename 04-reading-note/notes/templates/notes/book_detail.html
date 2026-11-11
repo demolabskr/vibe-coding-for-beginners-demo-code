@@ -36,7 +36,7 @@
     <label>메모 요약 {% if book.summary_by_ai %}<mark>AI가 만듦 · 확인 전</mark>{% else %}<mark class="checked">확인함</mark>{% endif %}
       <textarea name="summary" rows="4">{{ book.summary }}</textarea>
     </label>
-    <label>태그 {% if book.tags_by_ai %}<mark>AI가 붙임 · 확인 전</mark>{% else %}<mark class="checked">확인함</mark>{% endif %}
+    <label>태그 {% if book.tags_by_ai %}<mark>AI가 만듦 · 확인 전</mark>{% else %}<mark class="checked">확인함</mark>{% endif %}
       <input type="text" name="tags" value="{{ book.tags }}" placeholder="쉼표로 나눠 적기">
     </label>
     <button type="submit">확인하고 저장</button>
